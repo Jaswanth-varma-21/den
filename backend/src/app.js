@@ -1,0 +1,11 @@
+import express from 'express';import helmet from 'helmet';import cors from 'cors';import rateLimit from 'express-rate-limit';import path from 'node:path';import {fileURLToPath} from 'node:url';
+import {cfg} from './config/index.js';import routes from './routes/index.js';import {notFound,errorHandler} from './middleware/index.js';
+const app=express();app.disable('x-powered-by');
+app.use(helmet({contentSecurityPolicy:{directives:{defaultSrc:["'self'"],scriptSrc:["'self'","'unsafe-inline'",'https://cdnjs.cloudflare.com'],scriptSrcAttr:["'unsafe-inline'"],styleSrc:["'self'","'unsafe-inline'"],imgSrc:["'self'",'data:','blob:'],connectSrc:["'self'"],workerSrc:["'self'",'blob:']}}}));
+app.use(cors({origin:(o,cb)=>cb(null,!o||cfg.cors.includes(o)),methods:['GET','POST','PUT','PATCH','DELETE'],allowedHeaders:['Content-Type','Authorization','X-Guest-Token']}));
+app.use(express.json({limit:'100kb'}));
+app.use('/api',rateLimit({windowMs:15*60e3,limit:cfg.rate.max,standardHeaders:true,legacyHeaders:false,message:{error:'Too many requests'}}),routes);
+app.use('/api',notFound);
+app.get('/demo-payment/:id',(req,res)=>res.sendFile('demo-payment.html',{root:path.join(path.dirname(fileURLToPath(import.meta.url)),'../../frontend/public')}));
+app.use(express.static(path.join(path.dirname(fileURLToPath(import.meta.url)),'../../frontend/public')));
+app.use(errorHandler);export default app;

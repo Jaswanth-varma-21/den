@@ -1,0 +1,2 @@
+import {migrate} from '../src/db/migrate.js';import {seed} from '../src/db/seed.js';import {importPhotos} from '../src/db/importPhotos.js';import {seedPrices} from '../src/db/seedPrices.js';import {pool} from '../src/db/pool.js';
+await migrate();console.log('Seeded products:',await seed());console.log('Photos linked:',await importPhotos());console.log('Demo prices added:',await seedPrices());await pool.end();

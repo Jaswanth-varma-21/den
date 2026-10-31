@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="The Bear’s Den: an educational 3D virtual bar for exploring spirits brands."><title>The Bear’s Den</title>
+<style>
+:root{--bg:#0d0805;--fg:#f0e6d2;--gold:#d9a441;--panel:rgba(20,12,7,.92);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif;overflow:hidden}
+canvas{display:block;position:fixed;inset:0}
+.ov{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;background:rgba(8,5,3,.94);z-index:20}
+.ov h1{font-size:clamp(28px,7vw,60px);letter-spacing:.15em;margin:0 0 8px;color:var(--gold);font-weight:400}
+.ov p{max-width:520px;line-height:1.5;opacity:.85;margin:6px 0}
+button{background:none;border:1px solid var(--gold);color:var(--gold);padding:12px 26px;margin:8px;font:inherit;letter-spacing:.12em;cursor:pointer}
+button:hover{background:var(--gold);color:#120a05}
+#bar[hidden]{display:none}
+#bar{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;display:flex;gap:6px;padding:10px;flex-wrap:wrap;z-index:5;background:linear-gradient(#0d0805cc,transparent)}
+#bar input{background:#0008;border:1px solid #d9a44166;color:var(--fg);padding:8px 10px;font:inherit;flex:1;min-width:120px}
+#bar button{padding:6px 10px;margin:0;font-size:12px;letter-spacing:.05em}
+#bar button.on{background:var(--gold);color:#120a05}
+#panel{position:fixed;right:0;bottom:0;top:auto;width:min(380px,100%);max-height:62%;overflow:auto;background:var(--panel);border-top:1px solid var(--gold);padding:18px;box-sizing:border-box;transform:translateY(110%);transition:transform .5s;z-index:6;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+#panel.show{transform:none}
+#panel h2{margin:0;color:var(--gold);font-weight:400}
+#panel dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px}
+#panel dt{opacity:.6}#panel dd{margin:0}
+#title{position:fixed;left:0;right:0;bottom:12%;text-align:center;z-index:4;pointer-events:none;opacity:0;transition:opacity 2s}
+#title h1{margin:0;font-size:clamp(26px,6vw,54px);letter-spacing:.2em;color:var(--gold);font-weight:400;text-shadow:0 2px 20px #000}
+#title p{margin:6px 0 12px;font-style:italic}
+#title button{pointer-events:auto}
+small{opacity:.6;font-size:11px;display:block;margin-top:10px}
+</style></head><body>
+<div class="ov" id="gate"><h1>THE BEAR’S DEN</h1>
+<p>This is an educational brand-exploration experience for adults. You must be of legal drinking age in your country or region to enter. No sales, delivery or purchasing here.</p>
+<p>Please drink responsibly. Never drink and drive. Alcohol laws vary by region.</p>
+<div><button id="yes">I AM OF LEGAL AGE</button><button onclick="location.href='about:blank'">LEAVE</button></div></div>
+<div id="bar" hidden><input id="q" placeholder="Search brand, country…"></div>
+<div id="title"><h1>THE BEAR’S DEN</h1><p>An Extraordinary World of Spirits, Stories &amp; Craft.</p><button id="go">ENTER THE EXPERIENCE</button></div>
+<div id="fade" style="position:fixed;inset:0;background:#000;opacity:0;transition:opacity .6s;pointer-events:none;z-index:15"></div><div id="hint" style="position:fixed;left:10px;bottom:10px;font-size:12px;opacity:.6;z-index:4">WASD / arrows move · Shift run · drag to look · click a bottle · drag / scroll to inspect · Esc closes</div><div id="panel"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+fetch('/api/products?limit=100&sort=id').then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{window.D=j.items.map(p=>[p.brand,p.name,p.category,p.country,p.description||'',p.abv!=null?(p.abvNote==='Approximate'?'About ':'')+p.abv+'%':(p.abvNote||'Varies by product'),p.color||0xb5651d,p.id,p.bottleImageUrl||'',p.imageNote||'']);
+['/shop.js','/app.js'].forEach(u=>{const s=document.createElement('script');s.src=u;s.async=false;document.body.append(s)})}).catch(()=>{document.getElementById('gate').insertAdjacentHTML('beforeend','<p>Could not reach the Bear’s Den server. Start the backend and reload.</p>')});
+</script></body></html>

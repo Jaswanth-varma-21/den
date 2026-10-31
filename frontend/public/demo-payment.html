@@ -1,0 +1,26 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><title>Thank you · The Bear’s Den (Demo)</title>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html,body{margin:0;height:100%}body{background:radial-gradient(circle at 50% 30%,#3a2210,#0a0604 70%);color:#f0e6d2;font-family:Georgia,serif;text-align:center;overflow:hidden}
+canvas{position:fixed;inset:0;pointer-events:none}main{position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;box-sizing:border-box}
+h1{margin:6px 0;color:#d9a441;letter-spacing:.2em;font-weight:400;font-size:clamp(22px,6vw,44px);animation:rise 1.2s both}h2{margin:6px 0;font-weight:400;letter-spacing:.12em;font-size:clamp(20px,5vw,34px);color:#f3d28a;animation:rise 1.2s .3s both}
+p{max-width:460px;line-height:1.5;animation:rise 1.2s .6s both}.demo{border:1px solid #d9a441;color:#d9a441;letter-spacing:.14em;padding:8px 14px;animation:rise 1.2s .9s both;font-size:13px}
+.ref{margin:10px;opacity:.85}a.btn{margin-top:14px;border:1px solid #d9a441;color:#d9a441;padding:12px 22px;text-decoration:none;letter-spacing:.14em}a.btn:hover{background:#d9a441;color:#120a05}
+#bear{width:150px;animation:bob 2.4s ease-in-out infinite;filter:drop-shadow(0 0 18px #d9a44188)}@keyframes bob{50%{transform:translateY(-12px) rotate(-2deg)}}@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+#wave{transform-origin:128px 150px;animation:wave 1s ease-in-out infinite}@keyframes wave{50%{transform:rotate(-25deg)}}</style></head><body><canvas id="cv"></canvas>
+<main id="m"><p id="load">Opening the demonstration page…</p></main>
+<template id="ok"><svg id="bear" viewBox="0 0 160 170" aria-label="Golden bear"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6dc95"/><stop offset=".55" stop-color="#d9a441"/><stop offset="1" stop-color="#8a5a1c"/></linearGradient></defs>
+<circle cx="38" cy="36" r="20" fill="url(#g)"/><circle cx="122" cy="36" r="20" fill="url(#g)"/><circle cx="38" cy="36" r="9" fill="#8a5a1c"/><circle cx="122" cy="36" r="9" fill="#8a5a1c"/>
+<ellipse cx="80" cy="130" rx="46" ry="34" fill="url(#g)"/><circle cx="80" cy="72" r="46" fill="url(#g)"/><ellipse cx="80" cy="86" rx="20" ry="15" fill="#f6dc95"/><ellipse cx="80" cy="80" rx="7" ry="5" fill="#2a170a"/>
+<circle cx="62" cy="62" r="5" fill="#2a170a"/><circle cx="98" cy="62" r="5" fill="#2a170a"/><path d="M70 94q10 8 20 0" stroke="#2a170a" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M64 112l16 8 16-8-4 16-12-5-12 5z" fill="#120a05" stroke="#f6dc95"/><g id="wave"><ellipse cx="132" cy="120" rx="12" ry="22" fill="url(#g)" transform="rotate(-20 132 120)"/></g></svg></template>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
+const token=location.pathname.split('/').filter(Boolean).pop();
+async function call(p,o){const r=await fetch('/api/demo-checkout/'+encodeURIComponent(token)+p,o);const j=await r.json().catch(()=>({}));if(!r.ok)throw Object.assign(new Error(j.error||'Error'),{status:r.status});return j}
+function confetti(){const c=$('#cv'),x=c.getContext&&c.getContext('2d');if(!x)return;const f=()=>{c.width=innerWidth;c.height=innerHeight};f();addEventListener('resize',f);
+ const cols=['#f6dc95','#d9a441','#b8782a','#fff3c4','#8a5a1c'],P=Array.from({length:130},()=>({x:Math.random()*innerWidth,y:-Math.random()*innerHeight,r:3+Math.random()*5,v:1.5+Math.random()*3,s:Math.random()*2-1,c:cols[Math.random()*5|0],a:Math.random()*6}));
+ (function t(){x.clearRect(0,0,c.width,c.height);for(const p of P){p.y+=p.v;p.x+=p.s+Math.sin(p.a+=.05);if(p.y>c.height)p.y=-10;x.fillStyle=p.c;x.fillRect(p.x,p.y,p.r,p.r*1.6)}requestAnimationFrame(t)})()}
+(async()=>{const m=$('#m');try{await call('');const o=await call('/complete-demo',{method:'POST'});
+ m.innerHTML='';m.append($('#ok').content.cloneNode(true));
+ m.insertAdjacentHTML('beforeend',`<h1>THE BEAR’S DEN</h1><h2>THANK YOU FOR VISITING!</h2><p>Your virtual bar experience was wonderful.</p><div class="demo">THIS WAS A DEMONSTRATION CHECKOUT.</div><div class="ref">Demo reference: <b>${esc(o.reference)}</b></div><a class="btn" href="/">RETURN TO THE BAR</a>`);confetti()}
+ catch(e){m.innerHTML=`<h1>THE BEAR’S DEN</h1><p>${e.status===410?'This demonstration QR code has expired. Please generate a new one from the checkout page.':'This demonstration link was not found.'}</p><a class="btn" href="/">RETURN TO THE BAR</a>`}})();
+</script></body></html>

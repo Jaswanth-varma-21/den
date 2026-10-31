@@ -1,0 +1,28 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="Demonstration checkout for The Bear’s Den. No payment is taken."><title>Checkout (Demo) · The Bear’s Den</title>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;min-height:100vh;background:radial-gradient(circle at 20% 0,#2a170a,#0a0604 60%);color:#f0e6d2;font-family:Georgia,serif}
+main{max-width:640px;margin:0 auto;padding:20px}h1{color:#d9a441;font-weight:400;letter-spacing:.14em}.glass{background:rgba(255,255,255,.05);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid #d9a44155;padding:16px;margin:14px 0}
+.demo-tag{display:inline-block;border:1px solid #d9a441;color:#d9a441;font-size:11px;letter-spacing:.14em;padding:4px 8px}table{width:100%;border-collapse:collapse}td{padding:6px 0;border-bottom:1px solid #d9a44122}td:last-child{text-align:right}
+.tot td{border:0}.tt td{font-size:19px;color:#f3d28a}input,button,a.btn{font:inherit;background:#0008;color:#f0e6d2;border:1px solid #d9a44199;padding:10px 14px}button,a.btn{color:#d9a441;cursor:pointer;letter-spacing:.12em;text-decoration:none;display:inline-block}button:hover,a.btn:hover{background:#d9a441;color:#120a05}input{width:100%;box-sizing:border-box;margin:6px 0 12px}
+#qr img{width:min(260px,100%);background:#fff;padding:8px;display:block;margin:10px auto}#state{margin-top:10px;color:#f3d28a}small{opacity:.7;word-break:break-all}</style></head><body><main>
+<h1>CHECKOUT</h1><div class="demo-tag">DEMONSTRATION · NO PAYMENT IS TAKEN · DEMO PRICES</div>
+<section class="glass" id="sum">Loading your cart…</section>
+<section class="glass" id="gen-box" hidden><label for="name">Name (optional)</label><input id="name" maxlength="80" autocomplete="name" placeholder="Your name"><button id="gen">GENERATE DEMO QR CODE</button>
+<p><small>The QR code opens this website’s own demonstration page. It never contains payment details.</small></p><div id="qr"></div><div id="state" aria-live="polite"></div></section>
+<a class="btn" href="/">← BACK TO THE BAR</a></main>
+<script src="/shop.js"></script>
+<script>
+const $=s=>document.querySelector(s),{api,money,esc}=Shop;let timer;
+async function load(){const c=await api('/cart');
+ if(!c.items.length){$('#sum').innerHTML='Your cart is empty. <a href="/" style="color:#d9a441">Return to the bar</a>.';return}
+ $('#sum').innerHTML=`<table>${c.items.map(i=>`<tr><td>${esc(i.brand)} · ${esc(i.name)}${i.availability==='unavailable'?' <em>(unavailable)</em>':''}<br><small>${money(i.unitMinor)} × ${i.quantity}</small></td><td>${money(i.lineMinor)}</td></tr>`).join('')}
+ <tr class="tot"><td>Subtotal</td><td>${money(c.subtotalMinor)}</td></tr><tr class="tot"><td>Demo tax (${c.taxBp/100}%)</td><td>${money(c.taxMinor)}</td></tr><tr class="tt"><td>Total (demo)</td><td>${money(c.totalMinor)}</td></tr></table>`;
+ $('#gen-box').hidden=false}
+$('#gen').onclick=async()=>{$('#gen').disabled=true;try{const o=await api('/demo-checkout',{method:'POST',body:JSON.stringify($('#name').value.trim()?{customerName:$('#name').value.trim()}:{})});
+  $('#qr').innerHTML=`<img alt="Demonstration QR code" src="data:image/svg+xml;charset=utf-8,${encodeURIComponent(o.qrSvg)}"><small>${esc(o.confirmUrl)}</small><p>Reference <b>${esc(o.reference)}</b> · expires ${new Date(o.expiresAt).toLocaleTimeString()}</p>`;
+  $('#state').textContent='Waiting for the demo QR code to be scanned…';clearInterval(timer);
+  timer=setInterval(async()=>{try{const s=await api('/demo-checkout/'+o.sessionId+'/status');
+   if(s.status==='confirmed'){clearInterval(timer);$('#state').textContent='The demonstration page was opened on your phone. THIS WAS A DEMONSTRATION CHECKOUT: no payment was taken.';Shop.refresh()}
+   else if(s.status==='scanned')$('#state').textContent='QR scanned. Opening the demonstration page…';
+   else if(s.status==='expired'){clearInterval(timer);$('#state').textContent='This demo QR code has expired. Generate a new one.';$('#gen').disabled=false}}catch(e){}},2000)}catch(e){$('#state').textContent=e.message;$('#gen').disabled=false}};
+load().catch(e=>{$('#sum').textContent=e.message});
+</script></body></html>

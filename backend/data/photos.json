@@ -1,0 +1,108 @@
+[
+ {
+  "brand": "Johnnie Walker",
+  "product": "Red Label",
+  "file": "jw-red.jpg",
+  "note": "Cropped from a user-supplied Scotch whisky infographic; original publisher and licence not verified.",
+  "attribution": "Source not identified"
+ },
+ {
+  "brand": "Ballantine’s",
+  "product": "Finest",
+  "file": "ballantines.jpg",
+  "note": "Cropped from a user-supplied Scotch whisky infographic; original publisher and licence not verified.",
+  "attribution": "Source not identified"
+ },
+ {
+  "brand": "Chivas Regal",
+  "product": "12 Year Old",
+  "file": "chivas12.jpg",
+  "note": "Cropped from a user-supplied Scotch whisky infographic; original publisher and licence not verified.",
+  "attribution": "Source not identified"
+ },
+ {
+  "brand": "The Macallan",
+  "product": "12 Year Double Cask",
+  "file": "macallan12.jpg",
+  "note": "Cropped from a user-supplied Scotch whisky infographic; original publisher and licence not verified.",
+  "attribution": "Source not identified"
+ },
+ {
+  "brand": "Glenfiddich",
+  "product": "12 Year Old",
+  "file": "glenfiddich12.jpg",
+  "note": "Cropped from a user-supplied Scotch whisky infographic; original publisher and licence not verified.",
+  "attribution": "Source not identified"
+ },
+ {
+  "brand": "The Glenlivet",
+  "product": "12 Year Old",
+  "file": "glenlivet12.jpg",
+  "note": "Cropped from a user-supplied Scotch whisky infographic; original publisher and licence not verified.",
+  "attribution": "Source not identified"
+ },
+ {
+  "brand": "Jim Beam",
+  "product": "White Label",
+  "file": "jim-beam.jpg",
+  "note": "Cropped from a user-supplied ET Retail image (watermark visible); original publisher and licence not verified.",
+  "attribution": "Watermark: ET Retail"
+ },
+ {
+  "brand": "Maker’s Mark",
+  "product": "Kentucky Straight Bourbon",
+  "file": "makers-mark.jpg",
+  "note": "Cropped from a user-supplied ET Retail image (watermark visible); original publisher and licence not verified.",
+  "attribution": "Watermark: ET Retail"
+ },
+ {
+  "brand": "Hibiki",
+  "product": "Harmony",
+  "file": "hibiki.jpg",
+  "note": "Cropped from a user-supplied ET Retail image (watermark visible); original publisher and licence not verified. Variant not stated on the visible label; Harmony inferred from bottle design, please confirm.",
+  "attribution": "Watermark: ET Retail"
+ },
+ {
+  "brand": "Yamazaki",
+  "product": "12 Year Old",
+  "file": "yamazaki12.jpg",
+  "note": "Cropped from a user-supplied ET Retail image (watermark visible); original publisher and licence not verified.",
+  "attribution": "Watermark: ET Retail"
+ },
+ {
+  "brand": "Jack Daniel’s",
+  "product": "Old No. 7",
+  "file": "jack-daniels.jpg",
+  "note": "Cropped from a user-supplied bottle line-up photo; original publisher and licence not verified.",
+  "attribution": "Source not identified"
+ },
+ {
+  "brand": "Jameson",
+  "product": "Original",
+  "file": "jameson.jpg",
+  "note": "Cropped from a user-supplied TasteAtlas infographic (watermark visible); original publisher and licence not verified.",
+  "attribution": "Watermark: TasteAtlas"
+ },
+ {
+  "brand": "Greater Than",
+  "product": "Broken Bat Gin (Limited Edition)",
+  "file": "broken-bat.jpg",
+  "note": "User-supplied product photo; original publisher and licence not verified.",
+  "attribution": "Source not identified",
+  "create": {
+   "category": "Gin",
+   "country": "India",
+   "code": "IN",
+   "description": "Limited-edition cask-aged gin from NAO Spirits, India: Greater Than London Dry gin infused with toasted Kashmir willow sourced from cricket bats.",
+   "abv": 47,
+   "specs": {
+    "volume_ml": 700,
+    "brand_owner": "NAO Spirits",
+    "sources": [
+     "https://www.theginguild.com/ginopedia/gin-brands/broken-bat-gin/",
+     "https://www.masterofmalt.com/gin/greater-than/greater-than-broken-bat-gin"
+    ]
+   }
+  }
+ }
+]

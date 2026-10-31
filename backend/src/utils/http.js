@@ -1,0 +1,3 @@
+export class HttpError extends Error{constructor(status,message){super(message);this.status=status}}
+export const wrap=fn=>(req,res,next)=>Promise.resolve(fn(req,res,next)).catch(next);
+export const esc=s=>s.replace(/[\\%_]/g,'\\$&');

@@ -1,0 +1,37 @@
+// REFERENCE ONLY. The running backend uses the `pg` driver with sql/schema.sql (see README).
+// This file mirrors that schema for a future Prisma migration. It has NOT been executed or validated.
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql"  url = env("DATABASE_URL") }
+model Role { id Int @id @default(autoincrement()) @db.SmallInt  name String @unique  users User[]  @@map("roles") }
+model User { id String @id @default(uuid()) @db.Uuid  email String  username String  passwordHash String @map("password_hash")  roleId Int @map("role_id") @db.SmallInt
+  role Role @relation(fields:[roleId],references:[id])  createdAt DateTime @default(now()) @map("created_at")
+  favoriteProducts FavoriteProduct[] favoriteBrands FavoriteBrand[] recentlyViewed RecentlyViewed[] collections Collection[] activity UserActivity[] assets Asset[]  @@map("users") }
+model Category { id Int @id @default(autoincrement())  name String @unique  slug String @unique  brands Brand[] products Product[]  @@map("categories") }
+model Country { id Int @id @default(autoincrement())  name String @unique  code String @unique  brands Brand[] products Product[]  @@map("countries") }
+model Brand { id Int @id @default(autoincrement())  name String  countryId Int @map("country_id")  categoryId Int @map("category_id")  description String?  logoUrl String? @map("logo_url")  foundedYear Int? @map("founded_year")
+  createdAt DateTime @default(now()) @map("created_at")  updatedAt DateTime @default(now()) @map("updated_at")
+  country Country @relation(fields:[countryId],references:[id])  category Category @relation(fields:[categoryId],references:[id])
+  history BrandHistory[] products Product[] favorites FavoriteBrand[]  @@index([countryId]) @@index([categoryId]) @@map("brands") }
+model BrandHistory { id Int @id @default(autoincrement())  brandId Int @map("brand_id")  year Int?  event String  brand Brand @relation(fields:[brandId],references:[id],onDelete:Cascade)  @@map("brand_history") }
+model Product { id Int @id @default(autoincrement())  brandId Int @map("brand_id")  categoryId Int @map("category_id")  countryId Int @map("country_id")  name String  description String?  history String?
+  abv Decimal? @db.Decimal(4,1)  abvNote String? @map("abv_note")  bottleImageUrl String? @map("bottle_image_url")  modelUrl String? @map("model_url")  specs Json @default("{}")  color Int?
+  createdAt DateTime @default(now()) @map("created_at")  updatedAt DateTime @default(now()) @map("updated_at")
+  brand Brand @relation(fields:[brandId],references:[id],onDelete:Cascade)  category Category @relation(fields:[categoryId],references:[id])  country Country @relation(fields:[countryId],references:[id])
+  variants ProductVariant[] assets Asset[] favorites FavoriteProduct[] recent RecentlyViewed[] collectionItems CollectionItem[]  @@unique([brandId,name]) @@index([categoryId]) @@index([countryId]) @@map("products") }
+model ProductVariant { id Int @id @default(autoincrement())  productId Int @map("product_id")  name String  abv Decimal? @db.Decimal(4,1)  sizeMl Int? @map("size_ml")
+  product Product @relation(fields:[productId],references:[id],onDelete:Cascade)  @@unique([productId,name]) @@map("product_variants") }
+model Asset { id String @id @default(uuid()) @db.Uuid  kind String  productId Int? @map("product_id")  originalName String @map("original_name")  storedName String @unique @map("stored_name")  mime String  sizeBytes Int @map("size_bytes")  url String
+  uploadedBy String? @map("uploaded_by") @db.Uuid  createdAt DateTime @default(now()) @map("created_at")
+  product Product? @relation(fields:[productId],references:[id],onDelete:SetNull)  user User? @relation(fields:[uploadedBy],references:[id],onDelete:SetNull)  @@map("assets") }
+model FavoriteProduct { userId String @map("user_id") @db.Uuid  productId Int @map("product_id")  createdAt DateTime @default(now()) @map("created_at")
+  user User @relation(fields:[userId],references:[id],onDelete:Cascade)  product Product @relation(fields:[productId],references:[id],onDelete:Cascade)  @@id([userId,productId]) @@map("favorite_products") }
+model FavoriteBrand { userId String @map("user_id") @db.Uuid  brandId Int @map("brand_id")  createdAt DateTime @default(now()) @map("created_at")
+  user User @relation(fields:[userId],references:[id],onDelete:Cascade)  brand Brand @relation(fields:[brandId],references:[id],onDelete:Cascade)  @@id([userId,brandId]) @@map("favorite_brands") }
+model RecentlyViewed { userId String @map("user_id") @db.Uuid  productId Int @map("product_id")  viewedAt DateTime @default(now()) @map("viewed_at")
+  user User @relation(fields:[userId],references:[id],onDelete:Cascade)  product Product @relation(fields:[productId],references:[id],onDelete:Cascade)  @@id([userId,productId]) @@map("recently_viewed") }
+model Collection { id Int @id @default(autoincrement())  userId String @map("user_id") @db.Uuid  name String  createdAt DateTime @default(now()) @map("created_at")
+  user User @relation(fields:[userId],references:[id],onDelete:Cascade)  items CollectionItem[]  @@unique([userId,name]) @@map("collections") }
+model CollectionItem { collectionId Int @map("collection_id")  productId Int @map("product_id")  addedAt DateTime @default(now()) @map("added_at")
+  collection Collection @relation(fields:[collectionId],references:[id],onDelete:Cascade)  product Product @relation(fields:[productId],references:[id],onDelete:Cascade)  @@id([collectionId,productId]) @@map("collection_items") }
+model UserActivity { id BigInt @id @default(autoincrement())  userId String? @map("user_id") @db.Uuid  sessionId String? @map("session_id")  type String  entityType String? @map("entity_type")  entityId Int? @map("entity_id")  meta Json?
+  createdAt DateTime @default(now()) @map("created_at")  user User? @relation(fields:[userId],references:[id],onDelete:SetNull)  @@index([type,createdAt]) @@map("user_activity") }

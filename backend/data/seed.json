@@ -1,0 +1,268 @@
+[
+ {
+  "brand": "Johnnie Walker",
+  "name": "Red Label",
+  "category": "Whisky",
+  "country": "Scotland",
+  "description": "Blended Scotch whisky. Brand traces to John Walker’s grocery in Kilmarnock, 1820.",
+  "abv": 40,
+  "abvNote": null,
+  "specs": {},
+  "color": 11022878
+ },
+ {
+  "brand": "Jack Daniel’s",
+  "name": "Old No. 7",
+  "category": "Whisky",
+  "country": "United States",
+  "description": "Tennessee whiskey made in Lynchburg, Tennessee; the distillery is registered from 1866.",
+  "abv": 40,
+  "abvNote": null,
+  "specs": {},
+  "color": 1380622
+ },
+ {
+  "brand": "Glenfiddich",
+  "name": "12 Year Old",
+  "category": "Whisky",
+  "country": "Scotland",
+  "description": "Single malt Scotch from Dufftown, Speyside. Distillery founded 1887.",
+  "abv": 40,
+  "abvNote": null,
+  "specs": {},
+  "color": 3828554
+ },
+ {
+  "brand": "The Macallan",
+  "name": "12 Year Double Cask",
+  "category": "Whisky",
+  "country": "Scotland",
+  "description": "Speyside single malt; the distillery was licensed in 1824.",
+  "abv": 40,
+  "abvNote": null,
+  "specs": {},
+  "color": 9067051
+ },
+ {
+  "brand": "Absolut",
+  "name": "Vodka",
+  "category": "Vodka",
+  "country": "Sweden",
+  "description": "Made in Åhus, southern Sweden; the brand dates to 1879.",
+  "abv": 40,
+  "abvNote": null,
+  "specs": {},
+  "color": 9417945
+ },
+ {
+  "brand": "Grey Goose",
+  "name": "Vodka",
+  "category": "Vodka",
+  "country": "France",
+  "description": "French vodka made with wheat from northern France and water from Cognac.",
+  "abv": 40,
+  "abvNote": null,
+  "specs": {},
+  "color": 13621472
+ },
+ {
+  "brand": "Bacardí",
+  "name": "Superior",
+  "category": "Rum",
+  "country": "Cuba",
+  "description": "Founded in Santiago de Cuba in 1862; today produced mainly in Puerto Rico.",
+  "abv": null,
+  "abvNote": "Varies by market (37.5–40%)",
+  "specs": {
+   "production": "Brand founded in Cuba; produced mainly in Puerto Rico today"
+  },
+  "color": 14277072
+ },
+ {
+  "brand": "Havana Club",
+  "name": "Añejo 3 Años",
+  "category": "Rum",
+  "country": "Cuba",
+  "description": "Cuban rum brand. Check local labelling for strength.",
+  "abv": null,
+  "abvNote": "Varies by market",
+  "specs": {},
+  "color": 11895599
+ },
+ {
+  "brand": "Tanqueray",
+  "name": "London Dry",
+  "category": "Gin",
+  "country": "England",
+  "description": "London Dry gin; brand originated in London in 1830.",
+  "abv": null,
+  "abvNote": "Varies by market (commonly 43.1%)",
+  "specs": {},
+  "color": 2059069
+ },
+ {
+  "brand": "Hendrick’s",
+  "name": "Gin",
+  "category": "Gin",
+  "country": "Scotland",
+  "description": "Distilled in Girvan, Scotland; infused with cucumber and rose petals. Launched 1999.",
+  "abv": 41.4,
+  "abvNote": null,
+  "specs": {},
+  "color": 2829099
+ },
+ {
+  "brand": "Don Julio",
+  "name": "Blanco",
+  "category": "Tequila",
+  "country": "Mexico",
+  "description": "Tequila from Jalisco; brand founded in 1942.",
+  "abv": null,
+  "abvNote": "Varies by market (commonly 38–40%)",
+  "specs": {},
+  "color": 15261896
+ },
+ {
+  "brand": "Château Margaux",
+  "name": "Grand Vin",
+  "category": "Wine",
+  "country": "France",
+  "description": "Bordeaux first growth in the Margaux appellation.",
+  "abv": null,
+  "abvNote": "Varies by vintage",
+  "specs": {},
+  "color": 5902368
+ },
+ {
+  "brand": "Moët & Chandon",
+  "name": "Impérial Brut",
+  "category": "Champagne",
+  "country": "France",
+  "description": "Champagne house founded in Épernay in 1743.",
+  "abv": 12,
+  "abvNote": null,
+  "specs": {},
+  "color": 13939802
+ },
+ {
+  "brand": "Guinness",
+  "name": "Draught",
+  "category": "Beer",
+  "country": "Ireland",
+  "description": "Irish stout; the St. James’s Gate brewery in Dublin dates to 1759.",
+  "abv": 4.2,
+  "abvNote": "Approximate",
+  "specs": {},
+  "color": 1707784
+ },
+ {
+  "brand": "Heineken",
+  "name": "Lager",
+  "category": "Beer",
+  "country": "Netherlands",
+  "description": "Dutch lager; brand founded in Amsterdam in 1864.",
+  "abv": 5,
+  "abvNote": null,
+  "specs": {},
+  "color": 2062906
+ },
+ {
+  "brand": "Hennessy",
+  "name": "V.S",
+  "category": "Cognac",
+  "country": "France",
+  "description": "Cognac house founded in 1765.",
+  "abv": 40,
+  "abvNote": null,
+  "specs": {},
+  "color": 7027220
+ },
+ {
+  "brand": "Chivas Regal",
+  "name": "12 Year Old",
+  "category": "Whisky",
+  "country": "Scotland",
+  "description": "Blended Scotch whisky; the 12 Year Old is its flagship age statement.",
+  "abv": 40,
+  "abvNote": null,
+  "specs": {},
+  "color": 8004144
+ },
+ {
+  "brand": "Jameson",
+  "name": "Original",
+  "category": "Whisky",
+  "country": "Ireland",
+  "description": "Irish whiskey; the brand dates to 1780 and is associated with Dublin.",
+  "abv": 40,
+  "abvNote": null,
+  "specs": {},
+  "color": 3107642
+ },
+ {
+  "brand": "Ballantine’s",
+  "name": "Finest",
+  "category": "Whisky",
+  "country": "Scotland",
+  "description": "Blended Scotch whisky; Finest is the brand’s core expression.",
+  "abv": 40,
+  "abvNote": null,
+  "specs": {},
+  "color": 2771578
+ },
+ {
+  "brand": "Maker’s Mark",
+  "name": "Kentucky Straight Bourbon",
+  "category": "Whisky",
+  "country": "United States",
+  "description": "Kentucky bourbon made in Loretto, Kentucky.",
+  "abv": 45,
+  "abvNote": null,
+  "specs": {},
+  "color": 10496538
+ },
+ {
+  "brand": "Yamazaki",
+  "name": "12 Year Old",
+  "category": "Whisky",
+  "country": "Japan",
+  "description": "Japanese single malt from Suntory’s Yamazaki distillery near Kyoto, founded in 1923.",
+  "abv": 43,
+  "abvNote": null,
+  "specs": {},
+  "color": 9058858
+ },
+ {
+  "brand": "Hibiki",
+  "name": "Harmony",
+  "category": "Whisky",
+  "country": "Japan",
+  "description": "Japanese blended whisky from Suntory.",
+  "abv": 43,
+  "abvNote": null,
+  "specs": {},
+  "color": 13214282
+ },
+ {
+  "brand": "Jim Beam",
+  "name": "White Label",
+  "category": "Whisky",
+  "country": "United States",
+  "description": "Kentucky bourbon; White Label is the brand’s core expression.",
+  "abv": 40,
+  "abvNote": null,
+  "specs": {},
+  "color": 14274736
+ },
+ {
+  "brand": "The Glenlivet",
+  "name": "12 Year Old",
+  "category": "Whisky",
+  "country": "Scotland",
+  "description": "Speyside single malt; the distillery was licensed in 1824.",
+  "abv": 40,
+  "abvNote": null,
+  "specs": {},
+  "color": 8022570
+ }
+]

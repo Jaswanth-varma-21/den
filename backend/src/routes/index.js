@@ -1,0 +1,27 @@
+import {Router} from 'express';import rateLimit from 'express-rate-limit';import shop from './shop.js';
+import {authenticate,optionalAuth,authorize,validate} from '../middleware/index.js';import * as S from '../validators/schemas.js';
+import {A,C,U,M} from '../controllers/index.js';import * as assets from '../controllers/assets.js';import {wrap} from '../utils/http.js';import {cfg} from '../config/index.js';
+const r=Router(),adm=[authenticate,authorize('admin')],P=validate(S.idParam,'params'),LQ=validate(S.listQuery,'query');
+const authLimit=rateLimit({windowMs:15*60e3,limit:cfg.rate.authMax,standardHeaders:true,legacyHeaders:false,message:{error:'Too many attempts, try again later'}});
+r.get('/health',wrap(async(req,res)=>{const {q}=await import('../db/pool.js');await q('SELECT 1');res.json({ok:true,db:'up'})}));
+r.post('/auth/register',authLimit,validate(S.register),A.register);r.post('/auth/login',authLimit,validate(S.login),A.login);
+r.post('/auth/logout',authenticate,A.logout);r.get('/auth/me',authenticate,A.me);
+r.get('/brands',optionalAuth,LQ,C.brands);r.get('/brands/:id',P,C.brand);
+r.post('/brands',...adm,validate(S.brandBody),C.brandNew);r.put('/brands/:id',...adm,P,validate(S.brandPatch),C.brandEdit);r.delete('/brands/:id',...adm,P,C.brandDel);
+r.post('/brands/:id/history',...adm,P,validate(S.historyBody),C.brandHist);
+r.get('/products',optionalAuth,LQ,C.products);r.get('/products/:id',optionalAuth,P,C.product);
+r.post('/products',...adm,validate(S.productBody),C.productNew);r.put('/products/:id',...adm,P,validate(S.productPatch),C.productEdit);r.delete('/products/:id',...adm,P,C.productDel);
+r.post('/products/:id/variants',...adm,P,validate(S.variantBody),C.variantNew);r.delete('/products/:id/variants/:vid',...adm,P,C.variantDel);
+r.get('/search',optionalAuth,C.search);
+for(const t of ['categories','countries']){r.get('/'+t,C.lookupList(t));r.post('/'+t,...adm,validate(S.nameBody),C.lookupNew(t));r.put('/'+t+'/:id',...adm,P,validate(S.nameBody.partial()),C.lookupEdit(t));r.delete('/'+t+'/:id',...adm,P,C.lookupDel(t))}
+r.get('/me/favorites',authenticate,U.favorites);
+r.put('/me/favorites/products/:id',authenticate,P,U.fav('products',true));r.delete('/me/favorites/products/:id',authenticate,P,U.fav('products',false));
+r.put('/me/favorites/brands/:id',authenticate,P,U.fav('brands',true));r.delete('/me/favorites/brands/:id',authenticate,P,U.fav('brands',false));
+r.get('/me/recent',authenticate,U.recent);r.get('/me/history',authenticate,U.history);
+r.get('/me/collections',authenticate,U.collections);r.post('/me/collections',authenticate,validate(S.collectionBody),U.collNew);r.delete('/me/collections/:id',authenticate,P,U.collDel);
+r.put('/me/collections/:id/items/:pid',authenticate,U.collItem(true));r.delete('/me/collections/:id/items/:pid',authenticate,U.collItem(false));
+r.post('/track',optionalAuth,validate(S.trackBody),M.track);
+r.get('/assets/file/:name',assets.serve);r.get('/admin/assets',...adm,wrap(assets.list));r.post('/admin/assets',...adm,wrap(assets.upload));
+r.get('/admin/users',...adm,M.users);r.patch('/admin/users/:uid/role',...adm,validate(S.roleBody),M.setRole);r.get('/admin/analytics',...adm,M.analytics);
+r.use(shop);
+export default r;
